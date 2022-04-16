@@ -1,12 +1,12 @@
-import axios from 'axios';
-const GET_CITIES_URL='http://localhost:8080/get-all-cities'
+import axios from 'axios'
 
 
-export const getCities = async () =>{
-try {
-    const {data : {data}} = await axios.get(GET_CITIES_URL);
-    return data ;
-} catch (error) {
-    console.log(error)
-}
-}
+  export  const  getCities = async ()=> {
+         try {
+             const {data: {data} } = await axios.get("http://localhost:8080/city/get-all-cities")
+             return data ;
+         } catch (error) {
+             console.log(error);
+         }
+    }
+
