@@ -28,7 +28,6 @@ const LogIn = () => {
        }}
        validationSchema={LoginSchema}
        onSubmit={values => {
-         console.log(values);
        }}
      >
         <div class="w-full flex flex-wrap">

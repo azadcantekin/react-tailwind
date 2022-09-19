@@ -1,4 +1,4 @@
-
+import axios from "axios";
 const USER_URL = "http://localhost:8080/api/user/";
 export default class UserService{
 
@@ -7,11 +7,11 @@ export default class UserService{
 
     }
 
-  async signUp(userModel){
+    async signUp(userModel){
     
-            return await axios({
+            return axios({
                 method:"POST",
-                url:USER_URL + `sign-up­`,
+                url:USER_URL +`sign-up­`,
                 data:userModel,
                 headers:{"Content-Type":"application/json;charset-UTF-8"}
             }).then((res)=>{

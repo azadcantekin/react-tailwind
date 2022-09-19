@@ -1,18 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {Formik , Form} from 'formik'
 import * as Yup from 'yup'
 import {Link} from 'react-router-dom'
+import UserService from '../../services/UserService';
 
+let isDisabled;
 const SignInSchema = Yup.object().shape({
   
-    firstName: Yup.string()
-    .min(2, 'Too Short!')
-    .max(20, 'Too Long!')
-    .required('Required'),
-  lastName: Yup.string()
-    .min(2, 'Too Short!')
-    .max(20, 'Too Long!')
-    .required('Required'),
     password :Yup.string()
     .min(8,'To short!')
     .max(16,'To long')
@@ -24,20 +18,27 @@ const SignInSchema = Yup.object().shape({
 
 
 const Register = () => {
+  const  userService = new UserService();
+  const [token , setToken ] = useState([]);
   return (
     <div>
     <Formik
       initialValues={{
-        firstName: '',
-        lastName:'',
+        id : 0 ,
         email :'',
         password:''
       }}
       validationSchema={SignInSchema}
-      onSubmit={values => {
+      onSubmit={values=>{
         console.log(values);
+        const user = {
+          email : values.email,
+          password : values.password
+      };
+        userService.signUp(user);
+
       }}
-    >
+    > 
        <div class="w-full flex flex-wrap">
 
 
@@ -57,28 +58,24 @@ const Register = () => {
    </div>
 
    <div class="flex flex-col justify-center md:justify-start my-auto pt-8 md:pt-0 px-8 md:px-24 lg:px-32">
-       <p class="text-center text-3xl">Welcome to HRMS application.</p>
+       <p class="text-center text-3xl">Welcome to HRMS application.</p>    
         <Form>
-                 <div class="flex flex-col pt-4">
-                       <label for="firstName" class="text-lg">First Name</label>
-                       <input type="text" id="firstname" placeholder="First Name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"/>
-                   </div>
-                   <div class="flex flex-col pt-4">
-                       <label for="lastName" class="text-lg">Last Name</label>
-                       <input type="text" id="lastName" placeholder="Last Name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"/>
-                   </div>
-   
+           
+
                    <div class="flex flex-col pt-4">
                        <label for="email" class="text-lg">Email</label>
-                       <input type="email" id="email" placeholder="example@gmail.com" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"/>
+                       <input type="email" id="email" placeholder="example@gmail.com" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" 
+                 />
                    </div>
 
                    <div class="flex flex-col pt-4">
                        <label for="password" class="text-lg">Password</label>
-                       <input type="password" id="email" placeholder="Password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"/>
+                       <input type="password" id="password" placeholder="Password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                />
                    </div>
    
-                   <input type="submit" value="Log In" class="bg-black text-white font-bold text-lg hover:bg-gray-700 p-2 mt-8"/>
+                   <button type="submit">Submit</button>
+                   
           </Form>
           <div class="text-center pt-12 pb-12">
                    <p>You have a account <Link to="/login"><a href="" class="underline font-semibold">Log in here.</a></Link></p>
@@ -92,7 +89,6 @@ const Register = () => {
            <img class="object-cover w-full h-screen hidden md:block" src={require("../../assets/images/login.jpg")}/>
        </div>
    </div>
-     
      </Formik>
     </div>
   )

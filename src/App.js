@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { Route, Routes } from "react-router";
 import "./App.css";
 import {Navbar} from "./components";
@@ -6,7 +7,11 @@ import Register from './screens/Auth/Register'
 import AddJobAdvertisement from "./screens/Employeer/AddJobAdvertisement";
 
 function App() {
+  const [token, setToken] = useState();
 
+  if(!token) {
+    return <Register setToken={setToken} />
+  }
   return (
     <div>
     <Navbar/>
@@ -19,4 +24,4 @@ function App() {
   );
 }
 
-export default App;
+export default App ;
